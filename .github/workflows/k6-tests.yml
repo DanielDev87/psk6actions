@@ -1,22 +1,25 @@
-on:
-    push:
-        branches:
-            - main 
-    pull_request:
-        branches:
-            -main
-jobs:
-    test:
-        runs-on: ubuntu-latest
-        
-        steps:
-            - name: Checkout de ramas del codigo
-              uses: actions/checkout@v3
+name: k6 Performance Test
 
-            - name: Instalar k6
-              run: |
-                curl -s https://packagecloud.io/install/repositories/grafana/stable/script.deb.sh | sudo bash
-                sudo apt install k6
-            - name: Ejecución de la pruebas de carga
-              run: k6 run test.js
-            
+on:
+  push:
+    branches:
+      - main  
+  pull_request:
+    branches:
+      - main  
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Instalar k6
+        run: |
+          curl -s https://packagecloud.io/install/repositories/grafana/stable/script.deb.sh | sudo bash
+          sudo apt install k6
+
+      - name: Ejecutar pruebas de carga
+        run: k6 run test.js
